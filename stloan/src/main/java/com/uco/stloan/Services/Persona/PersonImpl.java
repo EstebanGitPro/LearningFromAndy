@@ -89,4 +89,10 @@ public class PersonImpl implements PersonService {
             throw new NotFoundEx("RESOURCE_NOT_FOUND");
         }
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByEmail (String email) {
+        return personRepository.existsByEmail(email);
+    }
 }

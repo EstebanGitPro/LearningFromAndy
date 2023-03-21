@@ -3,6 +3,7 @@ package com.uco.stloan.controller;
 import com.uco.stloan.Services.Persona.PersonService;
 import com.uco.stloan.dto.PatchDTO;
 import com.uco.stloan.dto.PersonDTO;
+import com.uco.stloan.exception.ExistsEmailDB;
 import com.uco.stloan.exception.NotFoundEx;
 import com.uco.stloan.exception.NotYetImplementedEx;
 import com.uco.stloan.exception.ResourceBadRequest;
@@ -16,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
-
-
+import java.util.Map;
 
 
 @RestController
@@ -43,6 +43,10 @@ import javax.validation.Valid;
         System.out.println(result.hasErrors());
         if (result.hasErrors()) {
             throw new ResourceBadRequest("Person bad request", result);
+        }
+
+        if(personService.existsByEmail(person.getEmail())) {
+            throw new ExistsEmailDB("Email: " + person.getEmail() + " existe");
         }
 
         Person newPerson = new Person(person.getIdentification(), person.getName(), person.getLastname(),

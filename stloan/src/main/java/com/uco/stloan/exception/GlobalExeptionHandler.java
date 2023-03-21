@@ -49,6 +49,13 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntityBuilder.build(err);
     }
 
+    @ExceptionHandler(ExistsEmailDB.class)
+    public ResponseEntity<ErrorResponse> handlerExistsEmail(ExistsEmailDB ex) {
+        return ErrorResponse.createErrorResponse(HttpStatus.NOT_FOUND,
+                "Resource bad request",
+                ex.getMessage());
+    }
+
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException ( NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request ) {
         ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.NOT_FOUND,

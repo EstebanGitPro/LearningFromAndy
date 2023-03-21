@@ -12,5 +12,5 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query(value = "DELETE FROM PEAPLE WHERE identificacion=?;", nativeQuery = true)
     void deleteByIdentification(String identificacion);*/
 
-    public boolean existsByEmail ( String email);
+    public boolean existsByEmail (String email);
 }
